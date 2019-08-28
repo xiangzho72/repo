@@ -3,7 +3,7 @@ import chessBoard
 class Piece():
     def __init__(self,row,col,chess,*moves):
         if isinstance(row, int) and isinstance(col,int) and len(moves)>0 and isinstance(chess, chessBoard.ChessBoard):
-            if row <0 or col <0 :        
+            if row <0 or col <0 or row >= len(chess) or col >= len(chess):        
                raise ValueError
         else:
                raise ValueError 
@@ -25,8 +25,7 @@ class Piece():
 class Queen(Piece):
     def __init__(self,row,col,chess):
         super().__init__(row,col,chess, chessBoard.getCol, chessBoard.getRow, chessBoard.getDiagonal)
-    
-    
+        
 class Rook(Piece):
     def __init__(self,row,col,chess):
         super().__init__(row,col,chess, chessBoard.getCol, chessBoard.getRow)
@@ -35,7 +34,4 @@ class Knight(Piece):
     def __init__(self,row,col,chess):
         super().__init__(row,col,chess, chessBoard.getL)
         
-class Test(Piece):        
-    def __init__(self,row,col,chess):
-        super().__init__(row,col,chess, chessBoard.getL)
      
