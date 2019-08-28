@@ -12,7 +12,7 @@ if __name__ == '__main__':
                                                        with one move, from the given position, with the assumption there are no other pieces on the board" ))
                                                        
     parser.add_argument( '-piece', metavar = 'piece', type = str, choices=['KNIGHT','ROOK','QUEEN'], help = "Only support KNIGHT|ROOK|QUEEN."  )
-    parser.add_argument( '-position', metavar = 'position', type = str, choices=[item for sublist in chess.getBoard() for item in sublist], \
+    parser.add_argument( '-position', metavar = 'position', type = str, choices=chess.getCells(), \
                                                                        help = "position in the board that piece is on")
     res = parser.parse_args() 
 

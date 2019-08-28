@@ -23,14 +23,14 @@ class ChessBoard:
         index = [ n for n in range(8)]
         self._colMap = { key: value for key, value in zip(col, index)}
     
-    def getBoard(self):
-        return self._board
+    def getCells(self):
+        return [item for sublist in self._board for item in sublist]
         
     def toIndex(self, strPosition):
         """ Returns index of row,col from a string position
             for example:  strPosition='a2' should return:  ( 1, 0 ), True
         """
-        if strPosition not in [item for sublist in self._board for item in sublist]:
+        if strPosition not in self.getCells():
             return (None, False)
         
         sCol, sRow = strPosition[0], strPosition[1]
