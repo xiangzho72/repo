@@ -1,0 +1,47 @@
+
+Pickup: 
+    - Drop
+    - Input
+    - MapSize  
+    - EnrichmentRate    
+    - Output
+
+ExcludeModules: 
+    - dns
+    - Sgsap
+    - Lcsap
+    - Sbcap
+
+
+Drop: 
+    default: 
+        - drop
+
+EnrichmentRate:
+    default:
+        - pipeline.decipher_rate
+        - pipeline.enrichment_rate
+
+MapSize: 
+    s1mme:
+        - s1ap_session_follower.maps.state_map.size_of_map
+        - gtp_ueinfo_model_map_size
+        - ueid_pool.number_of_active_objects
+        - s6a_auth_model_map.state_map.size_of_map
+        - dispatcher.dispatch_map_size
+    default:
+        - map.state_map.size_of_map  
+  
+Input: 
+    default: 
+        - processed_packets_per_sec
+        - discarded_packets_per_sec
+    CCaptureModule:
+        - input_plugin.bits_per_sec    
+    CXpiPublisherModule:
+        - packet_inter_thread_queue_size
+    
+        
+Output: 
+    CXpiPublisherModule:
+        - output
