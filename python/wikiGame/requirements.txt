@@ -1,0 +1,48 @@
+
+Requirements: 
+
+sqlite3       #Standard sqlite for python 3
+bs4           #BeautifulSoup 4
+
+
+High Level View: 
+
+1.  Use threads to for parrallel process: 
+    .   Mgr thread responsible for dispatch links to Worker threads, and save links scraped by Worker thread into database.
+    .   Mgr thread has the interface to datbase. 
+    .   Worker thread has the interface to internet(i.e. via urllib)
+    .   Two type of Worker thread:  
+         .  Worker : as explained above. 
+         .  PrototypeWorker: quick check links which has some similarity of target link    
+    
+2.  Use sqlite to save links scraped.  Two kinds of table: 
+    .   URL:   save all different links.  It's like a 'set' to exclude any duplicate links
+    .   LINK:  with column as :  idHi, idLo, linkText, url.
+        
+3.  Use Breadth-First Search as algorithm.  Each link is assigned with a id, which is used to identify its location in the tree.
+    For example:   a link is :  root(i.e. 1st in layer 0) ->  120th in layer 1 -> 25th in layer 2 -> 2th in layer 3
+    Then the id is :    1 << (16*4) | 120 << (16*3) | 25 << (16*2) | 2
+    Basically each layer willl occupy two bytes, which suggests that one page can have at most 65535 links in it. 
+    As sqlite can only support 8 bytes integer, and python can support 64 bytes integer, to make it simple, I
+       put a limit that the script can only support 8 layers, thus the maximum is 16 bytes, and thus we need
+       two id(i.e. idHi, idLo) in the link table to uniquely make a id in the python scripts.
+
+Note:
+  1. There are output on the console time by time from scripts, just to make sure it's still alive. 
+  2. The scripts has been tested with python 3.7 on a windows 10 laptop, performance data: 
+    YAFM -> city -> cable television
+    --- 23.11341166496277 seconds ---  
+  
+    YAFM -> city -> surrey, british columbia -> british columbia
+    --- 25.087387323379517 seconds ---
+
+    YAFM -> stub -> wikipedia:writing better articles -> beetle -> longhorn beetle
+    --- 314.7094202041626 seconds ---
+
+    YAFM -> zimbabwe radio station stubs -> stub categories needing attention -> lamiinae stubs -> lamiinae
+    --- 232.83281445503235 seconds ---     
+       
+        
+    
+                
+                
